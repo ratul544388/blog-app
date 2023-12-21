@@ -13,6 +13,7 @@ export default function Page() {
           appearance={{
             baseTheme: theme === "dark" ? dark : undefined,
           }}
+          afterSignInUrl="/"
         />
       </ClerkLoaded>
     </>

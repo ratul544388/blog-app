@@ -1,32 +1,16 @@
 "use client";
 
+import { navLinks } from "@/lib/constant";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export const NavLinks = () => {
-  const routes = [
-    {
-      label: "Home",
-      href: "/",
-    },
-    {
-      label: "About",
-      href: "/about",
-    },
-    {
-      label: "Contact",
-      href: "/contact",
-    },
-    {
-      label: "Login",
-      href: "/login",
-    },
-  ];
+
   const pathname = usePathname();
   return (
-    <div className="flex gap-5">
-      {routes.map((route) => (
+    <div className="gap-5 hidden lg:flex">
+      {navLinks.map((route) => (
         <Link
           href={`/${route.href}`}
           key={route.label}
