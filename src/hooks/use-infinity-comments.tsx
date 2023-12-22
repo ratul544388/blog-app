@@ -44,6 +44,7 @@ export const useInfinityComments = ({
     initialPageParam: undefined,
   });
 
+
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();

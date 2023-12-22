@@ -10,7 +10,7 @@ import { observe, useInView } from "react-intersection-observer";
 import { Loader } from "./loader";
 import { LoadingError } from "./loading-error";
 import { buttonVariants } from "./ui/button";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 interface CommentsProps {
   blog: Blog & {
@@ -50,18 +50,20 @@ export const Comments = ({ currentUser, blog }: CommentsProps) => {
           Login to add your comments
         </Link>
       )}
-      {data?.pages?.map((page, index) => (
-        <div key={index}>
-          {page?.items?.map((comment: FullCommentType) => (
-            <SingleComment
+      <div>
+        {data?.pages?.map((page, index) => (
+          <Fragment key={index}>
+            {page?.items?.map((comment: FullCommentType) => (
+              <SingleComment
                 key={comment.id}
-              comment={comment}
-              blog={blog}
-              currentUser={currentUser}
-            />
-          ))}
-        </div>
-      ))}
+                comment={comment}
+                blog={blog}
+                currentUser={currentUser}
+              />
+            ))}
+          </Fragment>
+        ))}
+      </div>
       {isFetchingNextPage && <Loader />}
       <div ref={ref} />
     </div>

@@ -27,3 +27,36 @@ export async function POST(req: Request) {
     return new NextResponse("Internal server error", { status: 500 });
   }
 }
+
+// export async function GET(req: Request) {
+//   try {
+//     const { searchParams } = new URL(req.url);
+
+//     const cursor = searchParams.get("cursor");
+//     const BATCH = 2;
+
+//     const blogs = await db.blog.findMany({
+//       where: {},
+//       take: BATCH,
+//       ...(cursor
+//         ? {
+//             skip: 1,
+//             cursor: {
+//               id: cursor,
+//             },
+//           }
+//         : {}),
+//     });
+
+//     let nextCursor = null;
+
+//     if (blogs.length === BATCH) {
+//       nextCursor = blogs[BATCH - 1].id;
+//     }
+
+//     return { blogs, nextCursor };
+//   } catch (error) {
+//     console.log(error);
+//     return null;
+//   }
+// }

@@ -25,7 +25,7 @@ export const Categories = ({}: CategoriesProps) => {
             onClick={() => handleClick(category)}
             key={category}
             className={cn(
-              colorMap[`bg_${index % 7}` as keyof typeof colorMap],
+              colorMap[category as keyof typeof colorMap],
               "text-white px-3 py-2 rounded-lg cursor-pointer hover:opacity-90 transition-all"
             )}
           >

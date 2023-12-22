@@ -8,15 +8,13 @@ import { cn } from "@/lib/utils";
 import { SignOutButton } from "@clerk/nextjs";
 import { User } from "@prisma/client";
 import { LogOut, User2 } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Avatar } from "./avatar";
-import { Separator } from "./ui/separator";
 
 export function UserButton({ currentUser }: { currentUser: User }) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const pathname = usePathname();
 
   const handleClick = (onClick: () => void) => {
     onClick();

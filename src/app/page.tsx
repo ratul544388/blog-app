@@ -1,14 +1,12 @@
-import { Blogs } from "@/components/blogs/blogs";
-import { EditorPickedBlogs } from "@/components/blogs/editor-picked-blogs";
-import { PopularBlogs } from "@/components/blogs/popular-blogs";
+import { AsideBlogs } from "@/app/blogs/_components/aside-blogs";
+import { Blogs } from "@/app/blogs/_components/blogs";
 import { Categories } from "@/components/categories";
 import { buttonVariants } from "@/components/ui/button";
 import { db } from "@/lib/db";
+import { getCurrentUser } from "@/lib/get-current-user";
 import Image from "next/image";
 import Link from "next/link";
 import { getBlogs } from "./actions/get-blogs";
-import { AsideBlogs } from "@/components/blogs/aside-blogs";
-import { getCurrentUser } from "@/lib/get-current-user";
 
 export const dynamic = "force-dynamic";
 export default async function Home({
@@ -57,22 +55,16 @@ export default async function Home({
       <Categories />
       <div className="grid grid-cols-8 md:gap-8 lg:gap-12">
         <Blogs
-          blogs={blogs}
+          initialBlogs={blogs}
           currentUser={currentUser}
           className="col-span-8 md:col-span-5"
         />
         <div className="hidden md:flex flex-col gap-10 col-span-3">
+          <AsideBlogs type="POPULAR" about="What's hot" title="Pupular Posts" />
           <AsideBlogs
-            blogs={blogs}
-            about="What's hot"
-            title="Pupular Posts"
-            seeMoreUrl="/blogs/popular"
-          />
-          <AsideBlogs
-            blogs={blogs}
+            type="EDITOR_CHOICE"
             about="Choosen by the editors"
             title="Editors Pick"
-            seeMoreUrl="/blogs/editor-choice"
           />
         </div>
       </div>

@@ -70,8 +70,9 @@ export const CommentForm = ({
         await axios.post(`/api/blogs/${blogId}/comments`, {
           ...values,
         });
-        toast.success("Commentn was posted");
+        toast.success("Comment was posted");
       }
+      setIsCommenting(false);
       form.reset();
       queryClient.invalidateQueries(["comments"] as InvalidateQueryFilters);
     } catch (error) {
@@ -94,7 +95,7 @@ export const CommentForm = ({
               <FormItem>
                 <FormControl>
                   <Textarea
-                    className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 border-b rounded-none focus:border-foreground px-0"
+                    className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 border-b rounded-none focus:border-foreground px-0 bg-transparent"
                     placeholder="Add a comment"
                     onFocus={() => setIsCommenting(true)}
                     autoFocus={!!comment}

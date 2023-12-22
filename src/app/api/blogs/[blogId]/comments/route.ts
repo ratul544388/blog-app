@@ -52,9 +52,14 @@ export async function GET(
           },
         },
       },
-      orderBy: {
-        createdAt: "desc",
-      },
+      orderBy: [
+        {
+          isPinned: "desc",
+        },
+        {
+          createdAt: "desc",
+        },
+      ],
     });
 
     let nextCursor = null;

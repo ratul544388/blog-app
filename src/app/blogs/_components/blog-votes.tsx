@@ -61,11 +61,11 @@ export const BlogVotes = ({ blogId, votes, currentUser }: BlogVotesProps) => {
   });
 
   return (
-    <div className="flex items-center gap-3">
-      <div className="flex items-center group cursor-pointer">
+    <div className="flex items-center gap-3 rounded-full bg-background w-fit">
+      <div className="flex items-center cursor-pointer">
         <Button
           onClick={() => mutate("UP")}
-          className={cn("rounded-full group-hover:bg-accent")}
+          className={cn("rounded-full")}
           size="icon"
           variant="ghost"
         >
@@ -75,12 +75,15 @@ export const BlogVotes = ({ blogId, votes, currentUser }: BlogVotesProps) => {
             <FaRegThumbsUp className={cn("h-5 w-5")} />
           )}
         </Button>
-        <p className="text-muted-foreground text-sm font-bold">{upVotes}</p>
+        <p className="text-muted-foreground text-sm font-semibold">{upVotes}</p>
       </div>
-      <div className="flex items-center group cursor-pointer">
+      <div className="flex items-center cursor-pointer">
+        <p className="text-muted-foreground text-sm font-semibold">
+          {downVotes}
+        </p>
         <Button
           onClick={() => mutate("DOWN")}
-          className={cn("rounded-full group-hover:bg-accent")}
+          className={cn("rounded-full")}
           size="icon"
           variant="ghost"
         >
@@ -90,7 +93,6 @@ export const BlogVotes = ({ blogId, votes, currentUser }: BlogVotesProps) => {
             <FaRegThumbsDown className={cn("h-5 w-5")} />
           )}
         </Button>
-        <p className="text-muted-foreground text-sm font-bold">{downVotes}</p>
       </div>
     </div>
   );

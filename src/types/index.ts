@@ -12,3 +12,5 @@ export type FullCommentType = Comment & {
     })[];
   })[];
 };
+
+export type BlogType = "POPULAR" | "EDITOR_CHOICE" | "SIMILAR_CATEGORY";

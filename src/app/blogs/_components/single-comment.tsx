@@ -14,7 +14,7 @@ import { useState } from "react";
 import { IoMdArrowDropup } from "react-icons/io";
 import { CommentForm } from "./comment-form";
 import { ReplyForm } from "./reply-form";
-import { CommentVotes } from "./votes/comment-votes";
+import { CommentVotes } from "./comment-votes";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import {
   InvalidateQueryFilters,
