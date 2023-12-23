@@ -133,7 +133,9 @@ export const SingleComment = ({
               commentId={comment.id}
             />
             <Button
-              onClick={() => setIsReplying(true)}
+              onClick={() => {
+                currentUser ? setIsReplying(true) : onOpen("AUTH_MODAL");
+              }}
               variant="ghost"
               className={cn("text-xs h-8 rounded-full", isReply && "hidden")}
             >

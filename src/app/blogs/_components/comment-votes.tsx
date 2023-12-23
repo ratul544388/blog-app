@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { useModal } from "@/hooks/use-modal-store";
 import { cn } from "@/lib/utils";
 import { User, Vote, VoteType } from "@prisma/client";
 import {
@@ -33,6 +34,7 @@ export const CommentVotes = ({
   commentId,
 }: CommentVotesProps) => {
   const queryClient = useQueryClient();
+  const { onOpen } = useModal();
 
   const isUserVoted = votes.find((vote) => {
     return vote.userId === currentUser?.id;
@@ -56,11 +58,15 @@ export const CommentVotes = ({
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (type: VoteType) => {
+      if (!currentUser) {
+        return onOpen("AUTH_MODAL");
+      }
       await axios.post(`/api/blogs/${blogId}/comments/${commentId}/vote`, {
         type,
       });
     },
     onSuccess: () => {
+      if (!currentUser) return;
       queryClient.invalidateQueries([
         "comments",
         "replies",

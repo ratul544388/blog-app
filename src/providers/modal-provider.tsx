@@ -1,4 +1,5 @@
 "use client";
+import { AuthModal } from "@/components/modals/auth-modal";
 import { DeleteBlogModal } from "@/components/modals/delete-blog-modal";
 import { DeleteCommentModal } from "@/components/modals/delete-comment-modal";
 import { User } from "@prisma/client";
@@ -18,7 +19,8 @@ const ModalProvider = () => {
   return (
     <>
       <DeleteCommentModal />
-      <DeleteBlogModal/>
+      <DeleteBlogModal />
+      <AuthModal />
     </>
   );
 };

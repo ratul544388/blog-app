@@ -5,7 +5,9 @@ import { cn } from "@/lib/utils";
 import { Blog, User } from "@prisma/client";
 import { BadgeAlert, BadgeCheck, EditIcon, TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import DropdownMenu, { DropdownMenuItemsType } from "../../../components/dropdown-menu";
+import DropdownMenu, {
+  DropdownMenuItemsType,
+} from "../../../components/dropdown-menu";
 import {
   InvalidateQueryFilters,
   useMutation,
@@ -27,6 +29,9 @@ const BlogDropdownMenu: React.FC<BlogDropdownMenuProps> = ({
   currentUser,
   queryKey,
 }) => {
+  if (!currentUser) {
+    return null;
+  }
   const router = useRouter();
   const { onOpen } = useModal();
   const queryClient = useQueryClient();

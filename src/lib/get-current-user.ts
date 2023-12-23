@@ -1,6 +1,5 @@
 import { currentUser } from "@clerk/nextjs";
 import { db } from "./db";
-import { User } from "@prisma/client";
 
 export async function getCurrentUser() {
   try {
@@ -15,6 +14,7 @@ export async function getCurrentUser() {
         userId: clerkUser.id,
       },
     });
+    
     return user;
   } catch (error) {
     console.log(error);

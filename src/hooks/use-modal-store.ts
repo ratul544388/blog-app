@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type ModalType = "DELETE_COMMENT_MODAL" | "DELETE_BLOG_MODAL"
+export type ModalType = "DELETE_COMMENT_MODAL" | "DELETE_BLOG_MODAL" | "AUTH_MODAL"
 
 interface ModalData {
     blogId?: string;

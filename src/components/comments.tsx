@@ -11,6 +11,7 @@ import { Loader } from "./loader";
 import { LoadingError } from "./loading-error";
 import { buttonVariants } from "./ui/button";
 import { Fragment, useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface CommentsProps {
   blog: Blog & {
@@ -42,10 +43,13 @@ export const Comments = ({ currentUser, blog }: CommentsProps) => {
         <CommentForm currentUser={currentUser} blogId={blog.id} />
       ) : (
         <Link
-          href="/sign-in"
-          className={buttonVariants({
-            variant: "link",
-          })}
+          href={`/sign-in?redirect_url=blogs/${blog.id}`}
+          className={cn(
+            buttonVariants({
+              variant: "link",
+            }),
+            "underline"
+          )}
         >
           Login to add your comments
         </Link>

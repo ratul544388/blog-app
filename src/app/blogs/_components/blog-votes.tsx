@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { useModal } from "@/hooks/use-modal-store";
 import { cn } from "@/lib/utils";
 import { User, Vote, VoteType } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
@@ -24,6 +25,7 @@ interface BlogVotesProps {
 
 export const BlogVotes = ({ blogId, votes, currentUser }: BlogVotesProps) => {
   const router = useRouter();
+  const { onOpen } = useModal();
 
   const isUserVoted = votes.find((vote) => {
     return vote.userId === currentUser?.id && !vote.isCommentVote;
@@ -47,11 +49,15 @@ export const BlogVotes = ({ blogId, votes, currentUser }: BlogVotesProps) => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (type: VoteType) => {
+      if (!currentUser) {
+        return onOpen("AUTH_MODAL");
+      }
       await axios.post(`/api/blogs/${blogId}/vote`, {
         type,
       });
     },
     onSuccess: () => {
+      if (!currentUser) return;
       router.refresh();
       toast.success("Success");
     },
