@@ -73,7 +73,7 @@ export const CommentVotes = ({
   });
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-3 rounded-full bg-background w-fit">
       <div className="flex items-center group cursor-pointer">
         <Button
           onClick={() => mutate("UP")}

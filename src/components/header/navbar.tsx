@@ -33,7 +33,8 @@ export const Navbar = ({ currentUser }: NavbarProps) => {
           <NavLinks />
           {currentUser ? (
             <>
-              {pathname.includes("new") || pathname.includes("edit") ? (
+              {(pathname.includes("new") || pathname.includes("edit")) &&
+              pathname !== "/blogs/editor-choice" ? (
                 <Link
                   href="/"
                   className={cn(

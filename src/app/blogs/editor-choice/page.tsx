@@ -4,7 +4,7 @@ import { Blogs } from "../_components/blogs";
 import { AsideBlogs } from "../_components/aside-blogs";
 
 const PopularBlogs = async () => {
-  const blogs = await getBlogs({ type: "POPULAR" });
+  const blogs = await getBlogs({ type: "EDITOR_CHOICE" });
 
   const currentUser = await getCurrentUser();
   return (
@@ -19,7 +19,7 @@ const PopularBlogs = async () => {
         <div className="hidden md:flex flex-col gap-10 col-span-3">
           <AsideBlogs about="What's new" title="Recent post" />
           <AsideBlogs
-            type="EDITOR_CHOICE"
+            type="POPULAR"
             about="Choosen by the editors"
             title="Editors Pick"
           />

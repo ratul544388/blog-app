@@ -1,8 +1,10 @@
 "use client";
 
-import * as dateFns from "date-fns";
+import { Dot } from "@/components/dot";
 import { cn, formatText } from "@/lib/utils";
 import { Blog, User } from "@prisma/client";
+import * as dateFns from "date-fns";
+import { BadgeCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Description } from "../../../components/description";
@@ -36,29 +38,65 @@ export const SingleBlog = ({
       </div>
       <div className="flex flex-col gap-3">
         <div className="space-y-3">
-          <div className="flex gap-1 items-center">
-            <p className="text-sm text-muted-foreground">
-              {dateFns.format(blog.createdAt, "dd-MM-yyyy")} -
-            </p>
-            <p className="text-rose-500 text-sm">{formatText(blog.category)}</p>
+          <div className="flex items-center gap-2">
+            <div className="flex gap-1">
+              <p className="text-sm text-muted-foreground">
+                {dateFns.format(blog.createdAt, "dd-MM-yyyy")} -
+              </p>
+              <p className="text-rose-500 text-sm">
+                {formatText(blog.category)}
+              </p>
+            </div>
+            <div className="flex items-center gap-2 xs:hidden sm:flex md:hidden lg:flex">
+              <Dot />
+              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <p className="font-semibold">{blog.views}</p>
+                <p className="line-clamp-1">
+                  {blog.views > 1 ? "views" : "view"}
+                </p>
+              </div>
+              {blog.isEditorChoice && (
+                <>
+                  <Dot />
+                  <BadgeCheck className="h-4 w-4 text-blue-500" />
+                </>
+              )}
+            </div>
             <BlogDropdownMenu
               currentUser={currentUser}
               blog={blog}
               className="xs:hidden ml-auto"
+              queryKey={queryKey}
             />
           </div>
           <h1 className="font-bold xs:text-xl line-clamp-2">{blog.title}</h1>
           <Description text={blog.description} className="line-clamp-2" />
         </div>
-        <Link
-          href={`/blogs/${blog.id}`}
-          className={cn(
-            buttonVariants({ variant: "link" }),
-            "underline decoration-rose-500 p-0 h-fit xs:h-auto"
-          )}
-        >
-          Read More
-        </Link>
+        <div className="flex items-center justify-between">
+          <Link
+            href={`/blogs/${blog.id}`}
+            className={cn(
+              buttonVariants({ variant: "link" }),
+              "underline decoration-rose-500 p-0"
+            )}
+          >
+            Read More
+          </Link>
+          <div className="hidden xs:flex sm:hidden md:flex lg:hidden items-center gap-2">
+            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+              <p className="font-semibold">{blog.views}</p>
+              <p className="line-clamp-1">
+                {blog.views > 1 ? "views" : "view"}
+              </p>
+            </div>
+            {blog.isEditorChoice && (
+              <>
+                <Dot />
+                <BadgeCheck className="h-4 w-4 text-blue-500" />
+              </>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

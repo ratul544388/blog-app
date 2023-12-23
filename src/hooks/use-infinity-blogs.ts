@@ -1,47 +1,62 @@
 import { getBlogs } from "@/actions/get-blogs";
 import { BlogType } from "@/types";
-import { Blog } from "@prisma/client";
+import { Blog, User } from "@prisma/client";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 export const useInfiniteBlogs = ({
   initialBlogs,
-  type,
+  category,
   limit,
+  type,
+  q,
 }: {
-  initialBlogs?: Blog[];
-  type?: BlogType;
+  initialBlogs?: (Blog & {
+    user: User;
+  })[];
+  category?: string;
   limit?: number;
+  type?: BlogType;
+  q?: string;
 }) => {
   const { inView, ref } = useInView();
-  const [hasNextPage, setHasNextPage] = useState(true);
+  const isMounted = useRef(false);
   const queryKey = type || "ALL";
-  const { data, fetchNextPage, isFetchingNextPage, status } =
+  const {
+    data,
+    fetchNextPage,
+    isFetchingNextPage,
+    status,
+    hasNextPage,
+    refetch,
+  } = useInfiniteQuery({
+    queryKey: [queryKey],
     //@ts-ignore
-    useInfiniteQuery({
-      queryKey: [queryKey],
-      queryFn: async ({ pageParam = 1 }) => {
-        const response = await getBlogs({ pageParam, type, limit });
-        if (response.length === 0) {
-          setHasNextPage(false);
+    queryFn: async ({ pageParam = undefined }) => {
+      const response = await getBlogs({
+        cursor: pageParam,
+        type,
+        limit,
+        category,
+      });
+      return response;
+    },
+    getNextPageParam: (lastPage) => lastPage?.nextCursor,
+    ...(initialBlogs
+      ? {
+          initialData: () => {
+            return {
+              pages: [{ items: initialBlogs, nextCursor: null }],
+              pageParams: [undefined],
+            };
+          },
         }
-        return response;
-      },
-      getNextPageParam: (_, pages) => {
-        return pages.length + 1;
-      },
-      ...(initialBlogs
-        ? {
-            initialData: () => {
-              return {
-                pages: [initialBlogs],
-                pageParams: [1],
-              };
-            },
-          }
-        : { initialPageParam: 1 }),
-    });
+      : {
+          initialPageParam: undefined,
+        }),
+  });
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -49,7 +64,14 @@ export const useInfiniteBlogs = ({
     }
   }, [inView, hasNextPage, fetchNextPage]);
 
-  const blogs = data?.pages.flatMap((page) => page);
+  useEffect(() => {
+    if (isMounted.current && initialBlogs && (category || q)) {
+      refetch();
+    }
+    isMounted.current = true;
+  }, [initialBlogs, category, q, refetch]);
+
+  const blogs = data?.pages.flatMap((page) => page.items);
 
   return {
     blogs,

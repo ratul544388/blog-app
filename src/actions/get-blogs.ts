@@ -4,30 +4,56 @@ import { db } from "@/lib/db";
 import { BlogType } from "@/types";
 
 export async function getBlogs({
-  pageParam = 1,
   type,
   limit,
   category,
+  cursor,
+  q,
 }: {
-  pageParam?: number;
   type?: BlogType;
   limit?: number;
   category?: string;
+  cursor?: string;
+  q?: string;
 } = {}) {
   try {
     const take = limit || 8;
 
-    const skip = (pageParam - 1) * 2;
-
     const blogs = await db.blog.findMany({
       where: {
-        ...(type === "SIMILAR_CATEGORY" && category
+        ...(category
+          ? { category }
+          : type === "EDITOR_CHOICE"
           ? {
-              category,
+              isEditorChoice: true,
+            }
+          : q
+          ? {
+              OR: [
+                {
+                  category: {
+                    contains: q,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  title: {
+                    contains: q,
+                    mode: "insensitive",
+                  },
+                },
+              ],
             }
           : {}),
       },
-      skip,
+      ...(cursor
+        ? {
+            skip: 1,
+            cursor: {
+              id: cursor,
+            },
+          }
+        : {}),
       take,
       include: {
         user: true,
@@ -37,17 +63,18 @@ export async function getBlogs({
           ? {
               views: "desc",
             }
-          : type === "EDITOR_CHOICE"
-          ? {
-              isEditorChoice: "desc",
-            }
           : {}),
       },
     });
 
-    return blogs;
+    let nextCursor = null;
+
+    if (blogs.length === take) {
+      nextCursor = blogs[take - 1].id;
+    }
+
+    return { items: blogs, nextCursor };
   } catch (error) {
     console.log(error);
-    return [];
   }
 }

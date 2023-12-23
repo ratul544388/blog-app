@@ -40,7 +40,7 @@ const Page = async ({ params }: { params: { blogId: string } }) => {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="grid sm:grid-cols-2 items-center gap-8 max-w-[800px]">
+      <div className="grid sm:grid-cols-2 gap-8 max-w-[800px]">
         <div className="space-y-10">
           <h1 className="text-3xl font-bold">{blog.title}</h1>
           <div className="space-y-4">
@@ -59,6 +59,7 @@ const Page = async ({ params }: { params: { blogId: string } }) => {
                 currentUser={currentUser}
               />
               <BlogViews blog={blog} />
+              <CreatedAt date={blog.createdAt} />
             </div>
           </div>
         </div>
@@ -75,6 +76,7 @@ const Page = async ({ params }: { params: { blogId: string } }) => {
           type="SIMILAR_CATEGORY"
           about="You Might Interested"
           title="Similar Cateogry"
+          category={blog.category}
         />
       </div>
     </div>

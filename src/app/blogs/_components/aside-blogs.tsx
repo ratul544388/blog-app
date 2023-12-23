@@ -3,26 +3,34 @@
 import { useInfiniteBlogs } from "@/hooks/use-infinity-blogs";
 import { colorMap } from "@/lib/constant";
 import { cn, formatText } from "@/lib/utils";
+import { BlogType } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { CreatedAt } from "../../../components/created-at";
 import { Dot } from "../../../components/dot";
 import { Loader } from "../../../components/loader";
 import { Button } from "../../../components/ui/button";
-import { BlogType } from "@/types";
+import { BadgeCheck, Eye } from "lucide-react";
 
 interface AsideBlogsProps {
   about: string;
   title: string;
-  type: BlogType;
+  type?: BlogType;
+  category?: string;
 }
 
-export const AsideBlogs = ({ about, title, type }: AsideBlogsProps) => {
+export const AsideBlogs = ({
+  about,
+  title,
+  type,
+  category,
+}: AsideBlogsProps) => {
   const limit = 5;
   const { blogs, hasNextPage, isFetchingNextPage, fetchNextPage, status } =
     useInfiniteBlogs({
       type,
       limit,
+      category,
     });
 
   return (
@@ -54,19 +62,31 @@ export const AsideBlogs = ({ about, title, type }: AsideBlogsProps) => {
                 />
               </div>
               <div>
-                <div
-                  className={cn(
-                    colorMap[blog.category as keyof typeof colorMap],
-                    "text-white w-fit rounded-full text-xs font-bold px-2 py-0.5"
+                <div className="flex items-center gap-2">
+                  <div
+                    className={cn(
+                      colorMap[blog.category as keyof typeof colorMap],
+                      "text-white w-fit rounded-full text-xs font-bold px-2 py-0.5"
+                    )}
+                  >
+                    {formatText(blog.category)}
+                  </div>
+                  {blog.isEditorChoice && (
+                    <BadgeCheck className="h-4 w-4 text-blue-500" />
                   )}
-                >
-                  {formatText(blog.category)}
+                  <Dot />
+                  <div className="flex items-center gap-1 text-sm text-muted-foreground line-clamp-1">
+                    <p className="font-semibold">{blog.views}</p>
+                    <Eye className="h-4 w-4" />
+                  </div>
                 </div>
                 <h3 className="text-xl font-semibold line-clamp-1">
                   {blog.title}
                 </h3>
-                <div className="flex items-center text-sm gap-1 mt-1">
-                  {/* <h5 className="font-semibold">{blog.user.name}</h5> */}
+                <div className="flex items-center text-sm gap-1 mt-1 line-clamp-1">
+                  <h5 className="font-semibold line-clamp-1">
+                    {blog.user.name}
+                  </h5>
                   <Dot />
                   <CreatedAt date={blog.createdAt} />
                 </div>
