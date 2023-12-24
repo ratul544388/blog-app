@@ -127,7 +127,7 @@ export const BlogForm = ({ blog }: BlogFormProps) => {
           name="category"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Category</FormLabel>
               <FormControl>
                 <Select
                   items={categories.slice(1)}
