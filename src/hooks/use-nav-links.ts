@@ -1,4 +1,4 @@
-import { Contact, FileQuestion, Home, ShieldQuestion } from "lucide-react";
+import { Home, ShieldQuestion } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 export const useNavLinks = () => {
@@ -15,12 +15,6 @@ export const useNavLinks = () => {
       href: "/about",
       active: pathname === "/about",
       icon: ShieldQuestion,
-    },
-    {
-      label: "Contact",
-      href: "/contact",
-      active: pathname === "/contact",
-      icon: Contact,
     },
   ];
 

@@ -102,7 +102,9 @@ export const AsideBlogs = ({
               </Button>
             )
           ) : (
-            <p className="text-center w-full">No more blog to load</p>
+            <p className="text-center w-full text-muted-foreground">
+              No more blogs to load
+            </p>
           )}
         </>
       )}

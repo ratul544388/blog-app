@@ -29,18 +29,26 @@ export const Blogs = ({
   type,
   q,
 }: BlogsProps) => {
-  const { blogs, hasNextPage, ref } = useInfiniteBlogs({
+  const { blogs, hasNextPage, ref, isRefetching } = useInfiniteBlogs({
     initialBlogs,
     category,
     type,
     q,
   });
 
+  if (isRefetching) {
+    return <Loader />;
+  }
+
+  if (!blogs?.length) {
+    return <p className="text-muted-foreground w-full text-center">No blogs found! </p>;
+  }
+
   return (
     <div className={cn("space-y-8 w-full", className)}>
       <div
         className={cn(
-          "grid space-y-8",
+          "grid space-6",
           isGrid && "xl:grid-cols-2 gap-6 max-w-screen-md xl:max-w-full"
         )}
       >

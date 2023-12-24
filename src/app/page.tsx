@@ -7,6 +7,7 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import Image from "next/image";
 import Link from "next/link";
 import { getBlogs } from "@/actions/get-blogs";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 
 export const dynamic = "force-dynamic";
 export default async function Home({
@@ -23,7 +24,7 @@ export default async function Home({
   const blogs = await getBlogs({ category });
 
   return (
-    <div className="space-y-8">
+    <MaxWidthWrapper className="space-y-8 pb-10">
       <h1 className="text-4xl leading-snug font-bold">
         Quell Quest:{" "}
         <span className="opacity-80 font-normal">
@@ -71,6 +72,6 @@ export default async function Home({
           />
         </div>
       </div>
-    </div>
+    </MaxWidthWrapper>
   );
 }

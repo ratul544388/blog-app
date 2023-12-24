@@ -11,6 +11,7 @@ import { notFound } from "next/navigation";
 import { BlogVotes } from "../_components/blog-votes";
 import { isValidObjectId } from "@/lib/utils";
 import { BlogViews } from "../_components/blog-views";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 
 const Page = async ({ params }: { params: { blogId: string } }) => {
   const currentUser = await getCurrentUser();
@@ -39,7 +40,7 @@ const Page = async ({ params }: { params: { blogId: string } }) => {
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <MaxWidthWrapper className="flex flex-col gap-8">
       <div className="grid sm:grid-cols-2 gap-8 max-w-[800px]">
         <div className="space-y-10">
           <h1 className="text-3xl font-bold">{blog.title}</h1>
@@ -79,7 +80,7 @@ const Page = async ({ params }: { params: { blogId: string } }) => {
           category={blog.category}
         />
       </div>
-    </div>
+    </MaxWidthWrapper>
   );
 };
 

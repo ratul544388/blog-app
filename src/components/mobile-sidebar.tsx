@@ -3,16 +3,67 @@
 import { useNavLinks } from "@/hooks/use-nav-links";
 import { cn } from "@/lib/utils";
 import { User } from "@prisma/client";
-import { BadgeCheck, Menu, UsersRound, X } from "lucide-react";
+import {
+  BadgeCheck,
+  FileStack,
+  FireExtinguisher,
+  Flame,
+  Home,
+  LogOut,
+  Menu,
+  ShieldQuestion,
+  User2,
+  UsersRound,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Logo } from "./header/logo";
 import { Button } from "./ui/button";
 import { ThemeToggler } from "./theme-toggler";
+import { usePathname } from "next/navigation";
 
 const MobileSidebar = ({ currentUser }: { currentUser: User | null }) => {
   const [open, setOpen] = useState(false);
-  const { navLinks } = useNavLinks();
+  const pathname = usePathname();
+  let routes = [
+    {
+      label: "Home",
+      href: "/",
+      icon: Home,
+    },
+    {
+      label: "About",
+      href: "/about",
+      icon: ShieldQuestion,
+    },
+    {
+      label: "Popular Posts",
+      href: "/blogs/popular-posts",
+      icon: Flame,
+    },
+    {
+      label: "Editor choice",
+      href: "/blogs/editor-choice",
+      icon: BadgeCheck,
+    },
+  ];
+
+  if (currentUser) {
+    routes = [
+      ...routes,
+      {
+        label: "My blogs",
+        href: `/${currentUser.id}/my-blogs`,
+        icon: FileStack,
+      },
+      {
+        label: "Profile",
+        href: `/${currentUser.id}/profile`,
+        icon: User2,
+      },
+    ];
+  }
 
   return (
     <div className="md:hidden">
@@ -45,42 +96,26 @@ const MobileSidebar = ({ currentUser }: { currentUser: User | null }) => {
           <div className="flex flex-col py-2">
             <Logo className="ml-10" />
             <div className="mt-5 flex flex-col">
-              {navLinks.map((link) => (
+              {routes.map((route) => (
                 <Link
                   onClick={() => setOpen(false)}
-                  href={link.href}
-                  key={link.href}
+                  href={route.href}
+                  key={route.href}
                   className={cn(
                     "pl-10 relative flex items-center gap-4 py-3 hover:bg-primary/5 font-medium",
-                    link.active && "bg-primary/5 font-semibold"
+                    pathname === route.href && "bg-primary/5 font-semibold"
                   )}
                 >
-                  <link.icon className="h-5 w-5" />
-                  {link.label}
+                  <route.icon className="h-5 w-5" />
+                  {route.label}
                   <div
                     className={cn(
                       "absolute right-0 h-full w-[5px] bg-primary rounded-full hidden",
-                      link.active && "block"
+                      pathname === route.href && "block"
                     )}
                   />
                 </Link>
               ))}
-            </div>
-            <div className="mt-10">
-              <Link
-                href="/blogs/popular"
-                className="font-medium flex items-center gap-4 hover:bg-primary/5 pl-10 py-3"
-              >
-                <UsersRound className="h-5 w-5 " />
-                <p>Popular Posts</p>
-              </Link>
-              <Link
-                href="/blogs/editor-choice"
-                className="font-medium flex items-center gap-4 hover:bg-primary/5 pl-10 py-3"
-              >
-                <BadgeCheck className="h-5 w-5 " />
-                <p>Editor choice</p>
-              </Link>
             </div>
           </div>
           <ThemeToggler className="mt-auto ml-10" />

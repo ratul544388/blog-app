@@ -31,6 +31,7 @@ export const useInfiniteBlogs = ({
     status,
     hasNextPage,
     refetch,
+    isRefetching,
   } = useInfiniteQuery({
     queryKey: [queryKey],
     //@ts-ignore
@@ -65,7 +66,7 @@ export const useInfiniteBlogs = ({
   }, [inView, hasNextPage, fetchNextPage]);
 
   useEffect(() => {
-    if (isMounted.current && initialBlogs && (category || q)) {
+    if (isMounted.current && initialBlogs) {
       refetch();
     }
     isMounted.current = true;
@@ -77,6 +78,7 @@ export const useInfiniteBlogs = ({
     blogs,
     isFetchingNextPage,
     fetchNextPage,
+    isRefetching,
     hasNextPage,
     status,
     ref,

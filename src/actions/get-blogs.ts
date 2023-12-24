@@ -9,12 +9,14 @@ export async function getBlogs({
   category,
   cursor,
   q,
+  userId,
 }: {
   type?: BlogType;
   limit?: number;
   category?: string;
   cursor?: string;
   q?: string;
+  userId?: string;
 } = {}) {
   try {
     const take = limit || 8;
@@ -43,6 +45,10 @@ export async function getBlogs({
                   },
                 },
               ],
+            }
+          : userId
+          ? {
+              userId,
             }
           : {}),
       },

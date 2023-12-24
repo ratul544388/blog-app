@@ -43,12 +43,21 @@ export function UserButton({ currentUser }: { currentUser: User }) {
         </div>
         <div
           onClick={() =>
-            handleClick(() => router.push(`/profile/${currentUser.id}`))
+            handleClick(() => router.push(`/${currentUser.id}/profile`))
           }
           className="p-3 cursor-pointer flex items-center gap-2 hover:bg-accent"
         >
           <User2 className="h-4 w-4" />
           Profile
+        </div>
+        <div
+          onClick={() =>
+            handleClick(() => router.push(`/${currentUser.id}/my-blogs`))
+          }
+          className="p-3 cursor-pointer flex items-center gap-2 hover:bg-accent"
+        >
+          <User2 className="h-4 w-4" />
+          My blogs
         </div>
         <SignOutButton>
           <div

@@ -2,6 +2,7 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { BlogForm } from "../../_components/blog-form";
 import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 
 const NewBlogPage = async ({ params }: { params: { blogId: string } }) => {
   const currentUser = await getCurrentUser();
@@ -15,7 +16,11 @@ const NewBlogPage = async ({ params }: { params: { blogId: string } }) => {
     notFound();
   }
 
-  return <BlogForm blog={blog} />;
+  return (
+    <MaxWidthWrapper>
+      <BlogForm blog={blog} />
+    </MaxWidthWrapper>
+  );
 };
 
 export default NewBlogPage;
