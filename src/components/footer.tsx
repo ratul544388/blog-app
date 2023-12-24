@@ -79,11 +79,11 @@ const Footer = () => {
           </Link>
         ))}
       </div>
-      <div className="flex flex-col mt-8 w-full gap-2 py-4 items-center bg-gradient-to-r from-rose-100 dark:from-zinc-800 to-teal-100">
+      <div className="flex px-3 flex-col mt-8 w-full gap-2 py-4 items-center bg-gradient-to-r from-rose-100 dark:from-zinc-800 to-teal-100">
         <h1 className="text-sm font-semibold">
           Indulge in Every Word, Crafted with Joy
         </h1>
-        <p className="text-sm">
+        <p className="text-sm text-center">
           QuillQuest Chronicles © 2023. Nourishing Minds, Safeguarded by Design
         </p>
       </div>

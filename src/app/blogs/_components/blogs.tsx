@@ -41,14 +41,18 @@ export const Blogs = ({
   }
 
   if (!blogs?.length) {
-    return <p className="text-muted-foreground w-full text-center">No blogs found! </p>;
+    return (
+      <p className="text-muted-foreground w-full text-center">
+        No blogs found!{" "}
+      </p>
+    );
   }
 
   return (
     <div className={cn("space-y-8 w-full", className)}>
       <div
         className={cn(
-          "grid space-6",
+          "grid gap-6",
           isGrid && "xl:grid-cols-2 gap-6 max-w-screen-md xl:max-w-full"
         )}
       >

@@ -46,6 +46,7 @@ export const DesktopSearchInput = () => {
       onSubmit={(e) => {
         e.preventDefault();
         router.push(`/blogs/search?q=${value}`);
+        setOpenCard(false);
       }}
       ref={containerRef}
       className="hidden sm:block relative w-full max-w-[500px] border border-input rounded-full"

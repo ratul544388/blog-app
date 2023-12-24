@@ -2,8 +2,7 @@ import { getBlogs } from "@/actions/get-blogs";
 import { BlogType } from "@/types";
 import { Blog, User } from "@prisma/client";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 
 export const useInfiniteBlogs = ({

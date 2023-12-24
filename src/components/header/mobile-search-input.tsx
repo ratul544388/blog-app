@@ -21,6 +21,7 @@ export const MobileSearchInput = () => {
   const containerRef = useRef(null);
   const [openCard, setOpenCard] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useOnClickOutside(containerRef, () => {
     setOpenSearch(false);
@@ -40,6 +41,10 @@ export const MobileSearchInput = () => {
     }
   }, [debouncedValue]);
 
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [openSearch]);
+
   const handleClick = (url: string) => {
     setOpenCard(false);
     router.push(url);
@@ -53,7 +58,7 @@ export const MobileSearchInput = () => {
           className="fixed top-0 flex px-3 items-center inset-x-0 h-[65px] bg-background z-[100]"
         >
           <Button
-            onClick={() => setOpenSearch(true)}
+            onClick={() => setOpenSearch(false)}
             variant="ghost"
             size="icon"
             type="button"
@@ -61,10 +66,18 @@ export const MobileSearchInput = () => {
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <div className="relative w-full border border-input rounded-full">
+          <form
+            onSubmit={() => {
+              router.push(`/blogs/search?q=${value}`);
+              setOpenCard(false);
+              setOpenSearch(false);
+            }}
+            className="relative w-full border border-input rounded-full"
+          >
             <input
               className="w-full bg-transparent outline-none h-10 pl-3 pr-20"
               placeholder="Search..."
+              ref={inputRef}
               value={value}
               onChange={(e) => setValue(e.target.value)}
             />
@@ -132,7 +145,7 @@ export const MobileSearchInput = () => {
                 ))}
               </div>
             )}
-          </div>
+          </form>
         </div>
       ) : (
         <Button

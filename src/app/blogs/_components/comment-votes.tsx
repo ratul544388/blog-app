@@ -99,6 +99,7 @@ export const CommentVotes = ({
         <p className="text-muted-foreground text-sm">{upVotes}</p>
       </div>
       <div className="flex items-center group cursor-pointer">
+        <p className="text-muted-foreground text-sm">{downVotes}</p>
         <Button
           onClick={() => mutate("DOWN")}
           className={cn(
@@ -114,7 +115,6 @@ export const CommentVotes = ({
             <FaRegThumbsDown className={cn("h-4 w-4")} />
           )}
         </Button>
-        <p className="text-muted-foreground text-sm">{downVotes}</p>
       </div>
     </div>
   );
