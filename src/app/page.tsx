@@ -32,7 +32,7 @@ export default async function Home({
       </h1>
       {blog && (
         <section className="flex md:items-center gap-8 md:flex-row flex-col">
-          <div className="relative aspect-[6/5] w-full max-w-[400px] rounded-lg overflow-hidden">
+          <div className="relative aspect-[6/5] w-full min-w-[300px] max-w-[400px] rounded-lg overflow-hidden">
             <Image
               src={blog.image}
               alt="Blog image"

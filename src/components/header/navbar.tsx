@@ -6,13 +6,14 @@ import { Edit, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MaxWidthWrapper } from "../max-width-wrapper";
-import { SearchInput } from "../search-input";
 import { ThemeToggler } from "../theme-toggler";
 import { buttonVariants } from "../ui/button";
 import { UserButton } from "../user-button";
 import { NavLinks } from "./nav-links";
 import { Logo } from "./logo";
 import MobileSidebar from "../mobile-sidebar";
+import { DesktopSearchInput } from "./desktop-searach-input";
+import { MobileSearchInput } from "./mobile-search-input";
 
 interface NavbarProps {
   currentUser: User | null;
@@ -27,10 +28,11 @@ export const Navbar = ({ currentUser }: NavbarProps) => {
           <MobileSidebar currentUser={currentUser} />
           <Logo />
         </div>
-        <SearchInput />
+        <DesktopSearchInput />
         <div className="flex items-center justify-end gap-5">
           <ThemeToggler className="hidden lg:block" />
           <NavLinks />
+          <MobileSearchInput />
           {currentUser ? (
             <>
               {(pathname.includes("new") || pathname.includes("edit")) &&
@@ -55,7 +57,7 @@ export const Navbar = ({ currentUser }: NavbarProps) => {
               <UserButton currentUser={currentUser} />
             </>
           ) : (
-            <Link href="sign-in" className={cn(buttonVariants())}>
+            <Link href="/sign-in" className={cn(buttonVariants())}>
               Login
             </Link>
           )}
