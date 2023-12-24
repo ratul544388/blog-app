@@ -27,7 +27,7 @@ export default async function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={cn(inter.className)}>
+        <body className={cn(inter.className, "bg-accent/60")}>
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
@@ -38,7 +38,7 @@ export default async function RootLayout({
               <ToastProvider />
               <Navbar currentUser={currentUser} />
               <ModalProvider />
-              <main className="bg-accent/60 min-h-screen h-full max-w-screen-xl mx-auto px-3 sm:px-5 lg:px-8 pt-[80px] pb-2">
+              <main className="min-h-screen h-full max-w-screen-xl mx-auto px-3 sm:px-5 lg:px-8 pt-[80px] pb-2">
                 {children}
               </main>
             </QueryProvider>
