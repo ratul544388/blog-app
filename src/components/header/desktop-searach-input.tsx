@@ -26,7 +26,7 @@ export const DesktopSearchInput = () => {
   useEffect(() => {
     const fetchResults = async () => {
       setIsLoading(true);
-      const res = await getBlogs({ q: value, limit: 5 });
+      const res = await getBlogs({ q: debouncedValue, limit: 5 });
       setResults(res?.items);
       setIsLoading(false);
     };
@@ -96,6 +96,7 @@ export const DesktopSearchInput = () => {
           </div>
           {results?.map((blog) => (
             <div
+              key={blog.id}
               onClick={() => handleClick(`/blogs/${blog.id}`)}
               className="flex items-center gap-2 p-3 hover:bg-accent"
               role="button"

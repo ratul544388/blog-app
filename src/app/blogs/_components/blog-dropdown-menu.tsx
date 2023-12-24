@@ -29,9 +29,6 @@ const BlogDropdownMenu: React.FC<BlogDropdownMenuProps> = ({
   currentUser,
   queryKey,
 }) => {
-  if (!currentUser) {
-    return null;
-  }
   const router = useRouter();
   const { onOpen } = useModal();
   const queryClient = useQueryClient();
@@ -85,6 +82,10 @@ const BlogDropdownMenu: React.FC<BlogDropdownMenuProps> = ({
       disabled: isPending,
       isDestructive: true,
     });
+  }
+  
+  if (!currentUser) {
+    return null;
   }
 
   return <DropdownMenu className={cn(className)} items={dropdownItems} />;
