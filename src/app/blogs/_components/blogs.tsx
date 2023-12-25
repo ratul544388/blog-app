@@ -29,16 +29,13 @@ export const Blogs = ({
   type,
   q,
 }: BlogsProps) => {
-  const { blogs, hasNextPage, ref, isRefetching } = useInfiniteBlogs({
+
+  const { blogs, hasNextPage, ref, refetch, status } = useInfiniteBlogs({
     initialBlogs,
     category,
     type,
     q,
   });
-
-  if (isRefetching) {
-    return <Loader />;
-  }
 
   if (!blogs?.length) {
     return (

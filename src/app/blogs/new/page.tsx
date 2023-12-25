@@ -11,7 +11,7 @@ const NewBlogPage = async () => {
   }
   
   return (
-    <MaxWidthWrapper>
+    <MaxWidthWrapper className="h-full">
       <BlogForm />
     </MaxWidthWrapper>
   );

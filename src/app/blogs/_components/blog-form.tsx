@@ -90,7 +90,7 @@ export const BlogForm = ({ blog }: BlogFormProps) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-8"
+        className="flex flex-col gap-8 pb-8"
       >
         <FormField
           control={form.control}

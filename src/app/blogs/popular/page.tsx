@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { Blogs } from "../_components/blogs";
 import { AsideBlogs } from "../_components/aside-blogs";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
+import { PageHeading } from "@/components/page-heading";
 
 const PopularBlogs = async () => {
   const blogs = await getBlogs({ type: "POPULAR" });
@@ -10,9 +11,10 @@ const PopularBlogs = async () => {
   const currentUser = await getCurrentUser();
   return (
     <MaxWidthWrapper className="w-full space-y-6">
-      <h2 className="text-2xl font-bold">Popular Posts</h2>
+      <PageHeading label="Popular posts" showBackButton />
       <div className="grid grid-cols-8 gap-8">
         <Blogs
+          type="POPULAR"
           initialBlogs={blogs?.items}
           currentUser={currentUser}
           className="col-span-8 md:col-span-5"

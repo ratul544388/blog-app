@@ -20,9 +20,9 @@ const ProfilePage = async ({ params }: { params: { userId: string } }) => {
   }
 
   return (
-    <MaxWidthWrapper className="flex items-center justify-center">
-      <div className="space-y-4">
-        <PageHeading label="Profile" showBackButton />
+    <MaxWidthWrapper className="space-y-3">
+      <PageHeading label="Profile" showBackButton />
+      <div className="w-fit mx-auto">
         <UserProfile />
       </div>
     </MaxWidthWrapper>

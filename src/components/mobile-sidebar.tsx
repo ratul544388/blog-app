@@ -39,7 +39,7 @@ const MobileSidebar = ({ currentUser }: { currentUser: User | null }) => {
     },
     {
       label: "Popular Posts",
-      href: "/blogs/popular-posts",
+      href: "/blogs/popular",
       icon: Flame,
     },
     {

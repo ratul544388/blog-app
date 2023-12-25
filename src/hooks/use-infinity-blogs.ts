@@ -2,7 +2,8 @@ import { getBlogs } from "@/actions/get-blogs";
 import { BlogType } from "@/types";
 import { Blog, User } from "@prisma/client";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 export const useInfiniteBlogs = ({
@@ -21,8 +22,11 @@ export const useInfiniteBlogs = ({
   q?: string;
 }) => {
   const { inView, ref } = useInView();
-  const isMounted = useRef(false);
+  const params = useSearchParams();
   const queryKey = type || "ALL";
+
+  const [currentParams, setCurrentParams] = useState(params);
+
   const {
     data,
     fetchNextPage,
@@ -37,6 +41,7 @@ export const useInfiniteBlogs = ({
     queryFn: async ({ pageParam = undefined }) => {
       const response = await getBlogs({
         cursor: pageParam,
+        q,
         type,
         limit,
         category,
@@ -65,11 +70,11 @@ export const useInfiniteBlogs = ({
   }, [inView, hasNextPage, fetchNextPage]);
 
   useEffect(() => {
-    if (isMounted.current && initialBlogs) {
+    if (params !== currentParams) {
       refetch();
+      setCurrentParams(params);
     }
-    isMounted.current = true;
-  }, [initialBlogs, category, q, refetch]);
+  }, [params, currentParams, refetch]);
 
   const blogs = data?.pages.flatMap((page) => page.items);
 
@@ -77,8 +82,8 @@ export const useInfiniteBlogs = ({
     blogs,
     isFetchingNextPage,
     fetchNextPage,
-    isRefetching,
     hasNextPage,
+    refetch,
     status,
     ref,
   };

@@ -25,7 +25,7 @@ export default async function Home({
 
   return (
     <MaxWidthWrapper className="space-y-8 pb-10">
-      <h1 className="text-4xl leading-snug font-bold">
+      <h1 className="text-4xl font-bold">
         Quell Quest:{" "}
         <span className="opacity-80 font-normal">
           Unveiling Creative Realms, Ideas, and Tech Discoveries
