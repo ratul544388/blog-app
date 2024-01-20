@@ -1,22 +1,23 @@
 "use client";
 
 import { useInfiniteBlogs } from "@/hooks/use-infinity-blogs";
-import { colorMap } from "@/lib/constant";
 import { cn, formatText } from "@/lib/utils";
 import { BlogType } from "@/types";
+import { BadgeCheck, Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { CreatedAt } from "../../../components/created-at";
 import { Dot } from "../../../components/dot";
 import { Loader } from "../../../components/loader";
 import { Button } from "../../../components/ui/button";
-import { BadgeCheck, Eye } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface AsideBlogsProps {
   about: string;
   title: string;
   type?: BlogType;
   category?: string;
+  queryKey: string;
 }
 
 export const AsideBlogs = ({
@@ -24,13 +25,15 @@ export const AsideBlogs = ({
   title,
   type,
   category,
+  queryKey,
 }: AsideBlogsProps) => {
-  const limit = 5;
+  const limit = 10;
   const { blogs, hasNextPage, isFetchingNextPage, fetchNextPage, status } =
     useInfiniteBlogs({
       type,
       limit,
       category,
+      queryKey: [queryKey, category as string],
     });
 
   return (
@@ -44,7 +47,7 @@ export const AsideBlogs = ({
         <h3 className="text-xl font-bold">{title}</h3>
       </div>
       {status === "pending" ? (
-        <Loader />
+        <AsideBlogs.Skeletons />
       ) : (
         <>
           {blogs?.map((blog) => (
@@ -65,7 +68,6 @@ export const AsideBlogs = ({
                 <div className="flex items-center gap-2">
                   <div
                     className={cn(
-                      colorMap[blog.category as keyof typeof colorMap],
                       "text-white w-fit rounded-full text-xs font-bold px-2 py-0.5"
                     )}
                   >
@@ -109,5 +111,22 @@ export const AsideBlogs = ({
         </>
       )}
     </section>
+  );
+};
+
+AsideBlogs.Skeletons = function AsideBlogSkeletons() {
+  return (
+    <div className="w-full">
+      {Array.from({ length: 8 }).map((_, index) => (
+        <div key={index} className="flex items-center w-full gap-3 p-3">
+          <Skeleton className="min-h-[80px] min-w-[80px]" />
+          <div className="space-y-2 w-full">
+            <Skeleton className="h-3 w-1/2" />
+            <Skeleton className="h-5 w-full" />
+            <Skeleton className="h-3 w-3/4" />
+          </div>
+        </div>
+      ))}
+    </div>
   );
 };

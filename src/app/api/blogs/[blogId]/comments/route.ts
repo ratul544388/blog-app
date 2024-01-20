@@ -12,7 +12,7 @@ export async function GET(
     const cursor = searchParams.get("cursor");
     const commentId = searchParams.get("commentId");
 
-    const BATCH = 10;
+    const BATCH = 20;
 
     const total = await db.comment.count({
       where: {

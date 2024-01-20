@@ -19,12 +19,17 @@ export async function getBlogs({
   userId?: string;
 } = {}) {
   try {
-    const take = limit || 8;
+    const take = limit || 10;
 
     const blogs = await db.blog.findMany({
       where: {
         ...(category
-          ? { category }
+          ? {
+              category: {
+                equals: category,
+                mode: "insensitive",
+              },
+            }
           : type === "EDITOR_CHOICE"
           ? {
               isEditorChoice: true,

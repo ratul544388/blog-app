@@ -16,6 +16,7 @@ const PopularBlogs = async () => {
       <div className="grid grid-cols-8 gap-8">
         <Blogs
           type="EDITOR_CHOICE"
+          queryKey="editor-choice"
           initialBlogs={blogs?.items}
           currentUser={currentUser}
           className="col-span-8 md:col-span-5"
@@ -26,8 +27,17 @@ const PopularBlogs = async () => {
             !blogs && "hidden"
           )}
         >
-          {/* <AsideBlogs about="What's new" title="Recent post" />
-          <AsideBlogs type="POPULAR" about="What's hot" title="Popular Posts" /> */}
+          <AsideBlogs
+            about="What's new"
+            title="Recent post"
+            queryKey="recent-posts"
+          />
+          <AsideBlogs
+            type="POPULAR"
+            about="What's hot"
+            title="Popular Posts"
+            queryKey="popular"
+          />
         </div>
       </div>
     </MaxWidthWrapper>

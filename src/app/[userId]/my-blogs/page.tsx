@@ -17,7 +17,12 @@ const ProfilePage = async () => {
   return (
     <MaxWidthWrapper className="flex flex-col gap-3">
       <PageHeading label="My blogs" showBackButton />
-      <Blogs currentUser={currentUser} isGrid initialBlogs={blogs?.items} />
+      <Blogs
+        currentUser={currentUser}
+        isGrid
+        initialBlogs={blogs?.items}
+        queryKey="my-blogs"
+      />
     </MaxWidthWrapper>
   );
 };

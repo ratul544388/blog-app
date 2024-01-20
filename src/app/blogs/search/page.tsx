@@ -45,6 +45,7 @@ const SearchPage = async ({
         currentUser={currentUser}
         q={q}
         isGrid
+        queryKey="search"
         initialBlogs={blogs?.items}
       />
     </MaxWidthWrapper>

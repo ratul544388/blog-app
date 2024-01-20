@@ -15,14 +15,20 @@ const PopularBlogs = async () => {
       <div className="grid grid-cols-8 gap-8">
         <Blogs
           type="POPULAR"
+          queryKey="popular"
           initialBlogs={blogs?.items}
           currentUser={currentUser}
           className="col-span-8 md:col-span-5"
         />
         <div className="hidden md:flex flex-col gap-10 col-span-3">
-          <AsideBlogs about="What's new" title="Recent post" />
+          <AsideBlogs
+            about="What's new"
+            title="Recent post"
+            queryKey="recent-posts"
+          />
           <AsideBlogs
             type="EDITOR_CHOICE"
+            queryKey="editor-choice"
             about="Choosen by the editors"
             title="Editors Pick"
           />

@@ -17,9 +17,7 @@ export default async function Home({
 }) {
   const blog = await db.blog.findFirst({});
   const currentUser = await getCurrentUser();
-  const category = searchParams.category
-    ? searchParams.category.toUpperCase()
-    : undefined;
+  const category = searchParams.category;
 
   const blogs = await getBlogs({ category });
 
@@ -53,19 +51,26 @@ export default async function Home({
           </div>
         </section>
       )}
-      <Categories />
-      <div className="grid grid-cols-8 md:gap-8 lg:gap-12">
+      <Categories category={category} />
+      <div className="grid grid-cols-8 md:gap-5 lg:gap-12">
         <div className="space-y-5 w-full col-span-8 md:col-span-5">
           <h3 className="text-xl font-bold hidden xs:block">Recent Posts</h3>
           <Blogs
+            queryKey="all"
             initialBlogs={blogs?.items}
             currentUser={currentUser}
             category={category}
           />
         </div>
         <div className="hidden md:flex flex-col gap-10 col-span-3">
-          <AsideBlogs type="POPULAR" about="What's hot" title="Pupular Posts" />
           <AsideBlogs
+            type="POPULAR"
+            about="What's hot"
+            title="Pupular Posts"
+            queryKey="popular"
+          />
+          <AsideBlogs
+            queryKey="editor-choice"
             type="EDITOR_CHOICE"
             about="Choosen by the editors"
             title="Editors Pick"

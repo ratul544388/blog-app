@@ -60,7 +60,6 @@ const Page = async ({ params }: { params: { blogId: string } }) => {
                 currentUser={currentUser}
               />
               <BlogViews blog={blog} />
-              <CreatedAt date={blog.createdAt} />
             </div>
           </div>
         </div>
@@ -74,6 +73,7 @@ const Page = async ({ params }: { params: { blogId: string } }) => {
           <Comments blog={blog} currentUser={currentUser} />
         </div>
         <AsideBlogs
+          queryKey="similar-category"
           type="SIMILAR_CATEGORY"
           about="You Might Interested"
           title="Similar Cateogry"

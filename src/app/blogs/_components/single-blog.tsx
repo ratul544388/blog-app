@@ -10,6 +10,7 @@ import Link from "next/link";
 import { Description } from "../../../components/description";
 import { buttonVariants } from "../../../components/ui/button";
 import BlogDropdownMenu from "./blog-dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface SingleBlogProps {
   blog: Blog;
@@ -97,6 +98,22 @@ export const SingleBlog = ({
             )}
           </div>
         </div>
+      </div>
+    </div>
+  );
+};
+
+SingleBlog.Skeleton = function SingleBlogSkeleton() {
+  return (
+    <div className="grid gap-6 items-center xs:grid-cols-2 p-5 rounded-xl bg-background shadow">
+      <Skeleton className="w-full aspect-[6/5]" />
+      <div className="">
+        <Skeleton className="w-full h-5" />
+        <Skeleton className="w-full h-7 mt-4" />
+        <Skeleton className="w-3/4 h-7 mt-1.5" />
+        <Skeleton className="w-full h-3.5 mt-4" />
+        <Skeleton className="w-[90%] h-3.5 mt-1.5" />
+        <Skeleton className="w-24 h-4 mt-6" />
       </div>
     </div>
   );

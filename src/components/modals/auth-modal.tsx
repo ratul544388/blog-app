@@ -23,7 +23,7 @@ export const AuthModal = () => {
       <div
         onClick={(e) => e.stopPropagation()}
         className={cn(
-          "max-w-[350px] w-full py-3 shadow-lg overflow-hidden rounded-xl bg-background border absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all opacity-20",
+          "max-w-[350px] w-full pt-6 pb-4 shadow-lg overflow-hidden rounded-xl bg-background border absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all opacity-20",
           open && "opacity-100"
         )}
       >
@@ -33,10 +33,10 @@ export const AuthModal = () => {
           size="icon"
           className="rounded-full h-8 w-8 absolute top-1 right-1"
         >
-          <X className="h-4 w-4" />
+          <X className="h-5 w-5" />
         </Button>
         <div className="w-full px-5">
-          <h4 className="font-bold">Login or Register now</h4>
+          <h4 className="font-bold text-lg">Login or Register now</h4>
           <p className="text-muted-foreground text-sm">
             Inorder to create blogs, votes, comments you must sign in to
             QuellQuest.

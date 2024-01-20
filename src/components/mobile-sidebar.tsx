@@ -1,27 +1,23 @@
 "use client";
 
-import { useNavLinks } from "@/hooks/use-nav-links";
 import { cn } from "@/lib/utils";
 import { User } from "@prisma/client";
 import {
   BadgeCheck,
   FileStack,
-  FireExtinguisher,
   Flame,
   Home,
-  LogOut,
   Menu,
   ShieldQuestion,
   User2,
-  UsersRound,
-  X,
+  X
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Logo } from "./header/logo";
-import { Button } from "./ui/button";
 import { ThemeToggler } from "./theme-toggler";
-import { usePathname } from "next/navigation";
+import { Button } from "./ui/button";
 
 const MobileSidebar = ({ currentUser }: { currentUser: User | null }) => {
   const [open, setOpen] = useState(false);

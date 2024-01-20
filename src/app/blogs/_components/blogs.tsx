@@ -4,15 +4,16 @@ import { Blog, User } from "@prisma/client";
 
 import { useInfiniteBlogs } from "@/hooks/use-infinity-blogs";
 import { cn } from "@/lib/utils";
-import { Loader } from "../../../components/loader";
-import { SingleBlog } from "./single-blog";
 import { BlogType } from "@/types";
+import { SingleBlog } from "./single-blog";
+import { useEffect, useRef } from "react";
 
 interface BlogsProps {
   initialBlogs?: (Blog & {
     user: User;
   })[];
   type?: BlogType;
+  queryKey: string;
   className?: string;
   currentUser: User | null;
   isGrid?: boolean;
@@ -26,11 +27,12 @@ export const Blogs = ({
   className,
   category,
   isGrid,
+  queryKey,
   type,
   q,
 }: BlogsProps) => {
-
-  const { blogs, hasNextPage, ref, refetch, status } = useInfiniteBlogs({
+  const { blogs, hasNextPage, ref } = useInfiniteBlogs({
+    queryKey: [queryKey, category as string, q as string],
     initialBlogs,
     category,
     type,
@@ -63,13 +65,23 @@ export const Blogs = ({
         ))}
       </div>
       {hasNextPage ? (
-        <Loader />
+        <Blogs.Skeletons />
       ) : (
         <p className="text-muted-foreground w-full text-center">
-          No more blog to load
+          No more blogs to load
         </p>
       )}
       <div ref={ref} />
     </div>
+  );
+};
+
+Blogs.Skeletons = function BlogsSkeletons() {
+  return (
+    <section className="space-y-8">
+      {Array.from({ length: 8 }).map((_, index) => (
+        <SingleBlog.Skeleton key={index} />
+      ))}
+    </section>
   );
 };
