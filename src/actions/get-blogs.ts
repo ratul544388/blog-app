@@ -5,87 +5,69 @@ import { BlogType } from "@/types";
 
 export async function getBlogs({
   type,
-  limit,
+  take = 10,
   category,
-  cursor,
   q,
   userId,
+  page = 1,
 }: {
   type?: BlogType;
-  limit?: number;
+  take?: number;
   category?: string;
-  cursor?: string;
   q?: string;
   userId?: string;
+  page?: number;
 } = {}) {
-  try {
-    const take = limit || 10;
-
-    const blogs = await db.blog.findMany({
-      where: {
-        ...(category
-          ? {
-              category: {
-                equals: category,
-                mode: "insensitive",
-              },
-            }
-          : type === "EDITOR_CHOICE"
-          ? {
-              isEditorChoice: true,
-            }
-          : q
-          ? {
-              OR: [
-                {
-                  category: {
-                    contains: q,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  title: {
-                    contains: q,
-                    mode: "insensitive",
-                  },
-                },
-              ],
-            }
-          : userId
-          ? {
-              userId,
-            }
-          : {}),
-      },
-      ...(cursor
+  const skip = (page - 1) * take;
+  const blogs = await db.blog.findMany({
+    where: {
+      ...(category
         ? {
-            skip: 1,
-            cursor: {
-              id: cursor,
+            category: {
+              equals: category,
+              mode: "insensitive",
             },
           }
+        : type === "EDITOR_CHOICE"
+        ? {
+            isEditorChoice: true,
+          }
+        : q
+        ? {
+            OR: [
+              {
+                category: {
+                  contains: q,
+                  mode: "insensitive",
+                },
+              },
+              {
+                title: {
+                  contains: q,
+                  mode: "insensitive",
+                },
+              },
+            ],
+          }
+        : userId
+        ? {
+            userId,
+          }
         : {}),
-      take,
-      include: {
-        user: true,
-      },
-      orderBy: {
-        ...(type === "POPULAR"
-          ? {
-              views: "desc",
-            }
-          : {}),
-      },
-    });
+    },
+    take,
+    skip: skip,
+    include: {
+      user: true,
+    },
+    orderBy: {
+      ...(type === "POPULAR"
+        ? {
+            views: "desc",
+          }
+        : {}),
+    },
+  });
 
-    let nextCursor = null;
-
-    if (blogs.length === take) {
-      nextCursor = blogs[take - 1].id;
-    }
-
-    return { items: blogs, nextCursor };
-  } catch (error) {
-    console.log(error);
-  }
+  return blogs;
 }

@@ -1,13 +1,14 @@
-import { AsideBlogs } from "@/app/blogs/_components/aside-blogs";
+import { getBlogs } from "@/actions/get-blogs";
 import { Blogs } from "@/app/blogs/_components/blogs";
 import { Categories } from "@/components/categories";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
+import { Pagination } from "@/components/pagination";
 import { buttonVariants } from "@/components/ui/button";
 import { db } from "@/lib/db";
 import { getCurrentUser } from "@/lib/get-current-user";
 import Image from "next/image";
 import Link from "next/link";
-import { getBlogs } from "@/actions/get-blogs";
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
+import { AsideBlogs } from "./blogs/_components/aside-blogs";
 
 export const dynamic = "force-dynamic";
 export default async function Home({
@@ -17,9 +18,15 @@ export default async function Home({
 }) {
   const blog = await db.blog.findFirst({});
   const currentUser = await getCurrentUser();
+  const page = Number(searchParams.page) || 1;
   const category = searchParams.category;
+  const take = 10;
+  const totalBlogs = await db.blog.count();
+  const totalPages = Math.ceil(totalBlogs / take);
+  const blogs = await getBlogs({ category, take, page });
 
-  const blogs = await getBlogs({ category });
+  const popularBlogs = await getBlogs({ category, type: "POPULAR" });
+  const editorChoiceBlogs = await getBlogs({ category, type: "EDITOR_CHOICE" });
 
   return (
     <MaxWidthWrapper className="space-y-8 pb-10">
@@ -55,25 +62,21 @@ export default async function Home({
       <div className="grid grid-cols-8 md:gap-5 lg:gap-12">
         <div className="space-y-5 w-full col-span-8 md:col-span-5">
           <h3 className="text-xl font-bold hidden xs:block">Recent Posts</h3>
-          <Blogs
-            queryKey="all"
-            initialBlogs={blogs?.items}
-            currentUser={currentUser}
-            category={category}
-          />
+          <Blogs blogs={blogs} currentUser={currentUser} />
+          <Pagination currentPage={page} totalPages={totalPages} />
         </div>
         <div className="hidden md:flex flex-col gap-10 col-span-3">
           <AsideBlogs
-            type="POPULAR"
+            blogs={popularBlogs}
             about="What's hot"
             title="Pupular Posts"
-            queryKey="popular"
+            seeMoreUrl="/blogs/popular"
           />
           <AsideBlogs
-            queryKey="editor-choice"
-            type="EDITOR_CHOICE"
+            blogs={editorChoiceBlogs}
             about="Choosen by the editors"
             title="Editors Pick"
+            seeMoreUrl="/blogs/editor-choice"
           />
         </div>
       </div>

@@ -12,6 +12,7 @@ import { BlogVotes } from "../_components/blog-votes";
 import { isValidObjectId } from "@/lib/utils";
 import { BlogViews } from "../_components/blog-views";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
+import { getBlogs } from "@/actions/get-blogs";
 
 const Page = async ({ params }: { params: { blogId: string } }) => {
   const currentUser = await getCurrentUser();
@@ -38,6 +39,8 @@ const Page = async ({ params }: { params: { blogId: string } }) => {
   if (!blog) {
     notFound();
   }
+
+  const similarBlogs = await getBlogs({ category: blog.category });
 
   return (
     <MaxWidthWrapper className="flex flex-col gap-8">
@@ -73,11 +76,9 @@ const Page = async ({ params }: { params: { blogId: string } }) => {
           <Comments blog={blog} currentUser={currentUser} />
         </div>
         <AsideBlogs
-          queryKey="similar-category"
-          type="SIMILAR_CATEGORY"
+          blogs={similarBlogs}
           about="You Might Interested"
           title="Similar Cateogry"
-          category={blog.category}
         />
       </div>
     </MaxWidthWrapper>

@@ -25,7 +25,7 @@ export const NavLinks = () => {
     <div className="gap-5 hidden lg:flex">
       {routes.map((route) => (
         <Link
-          href={`/${route.href}`}
+          href={route.href}
           key={route.label}
           className={cn(
             "capitalize",

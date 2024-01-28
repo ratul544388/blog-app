@@ -19,9 +19,8 @@ const ProfilePage = async () => {
       <PageHeading label="My blogs" showBackButton />
       <Blogs
         currentUser={currentUser}
-        isGrid
-        initialBlogs={blogs?.items}
-        queryKey="my-blogs"
+        className="max-w-[800px] mx-auto"
+        blogs={blogs}
       />
     </MaxWidthWrapper>
   );

@@ -1,10 +1,10 @@
 "use client";
 
-import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "./ui/button";
+import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { buttonVariants } from "./ui/button";
 
 const Footer = () => {
   const pathname = usePathname();

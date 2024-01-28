@@ -1,47 +1,55 @@
 import { getBlogs } from "@/actions/get-blogs";
-import { getCurrentUser } from "@/lib/get-current-user";
-import { Blogs } from "../_components/blogs";
-import { AsideBlogs } from "../_components/aside-blogs";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { PageHeading } from "@/components/page-heading";
-import { cn } from "@/lib/utils";
+import { Pagination } from "@/components/pagination";
+import { db } from "@/lib/db";
+import { getCurrentUser } from "@/lib/get-current-user";
+import { AsideBlogs } from "../_components/aside-blogs";
+import { Blogs } from "../_components/blogs";
 
-const PopularBlogs = async () => {
-  const blogs = await getBlogs({ type: "EDITOR_CHOICE" });
-
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) {
   const currentUser = await getCurrentUser();
+
+  const page = Number(searchParams.page) || 1;
+  const category = searchParams.category;
+
+  const take = 10;
+  const totalBlogs = await db.blog.count();
+  const totalPages = Math.ceil(totalBlogs / take);
+  const blogs = await getBlogs({ category, take, page, type: "EDITOR_CHOICE" });
+
+  const recentPosts = await getBlogs({ category });
+  const popularPosts = await getBlogs({ category, type: "POPULAR" });
+
   return (
     <MaxWidthWrapper className="w-full space-y-6">
-      <PageHeading label="Editor choice" showBackButton />
+      <PageHeading label="Popular posts" showBackButton />
       <div className="grid grid-cols-8 gap-8">
         <Blogs
-          type="EDITOR_CHOICE"
-          queryKey="editor-choice"
-          initialBlogs={blogs?.items}
+          blogs={blogs}
           currentUser={currentUser}
           className="col-span-8 md:col-span-5"
         />
-        <div
-          className={cn(
-            "hidden md:flex flex-col gap-10 col-span-3",
-            !blogs && "hidden"
-          )}
-        >
+        <div className="hidden md:flex flex-col gap-10 col-span-3">
           <AsideBlogs
+            blogs={recentPosts}
             about="What's new"
             title="Recent post"
-            queryKey="recent-posts"
+            seeMoreUrl="/"
           />
           <AsideBlogs
-            type="POPULAR"
-            about="What's hot"
-            title="Popular Posts"
-            queryKey="popular"
+            blogs={popularPosts}
+            about="Choosen by the editors"
+            title="Editors Pick"
+            seeMoreUrl="/blogs/popular"
           />
         </div>
       </div>
+      <Pagination currentPage={page} totalPages={totalPages} />
     </MaxWidthWrapper>
   );
-};
-
-export default PopularBlogs;
+}

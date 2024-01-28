@@ -26,8 +26,8 @@ export const DesktopSearchInput = () => {
   useEffect(() => {
     const fetchResults = async () => {
       setIsLoading(true);
-      const res = await getBlogs({ q: debouncedValue, limit: 5 });
-      setResults(res?.items);
+      const res = await getBlogs({ q: debouncedValue, take: 5 });
+      setResults(res);
       setIsLoading(false);
     };
 

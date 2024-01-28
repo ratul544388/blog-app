@@ -31,8 +31,8 @@ export const MobileSearchInput = () => {
   useEffect(() => {
     const fetchResults = async () => {
       setIsLoading(true);
-      const res = await getBlogs({ q: debouncedValue, limit: 5 });
-      setResults(res?.items);
+      const res = await getBlogs({ q: debouncedValue, take: 5 });
+      setResults(res);
       setIsLoading(false);
     };
 
@@ -110,7 +110,7 @@ export const MobileSearchInput = () => {
                   <Search className="h-6 w-6" />
                   Search for {`"${value}"`}
                   <PulseLoader
-                    color={"#D73A49"}
+                    color={"#1F1F1F"}
                     loading={isLoading}
                     size={10}
                     aria-label="Loading Spinner"

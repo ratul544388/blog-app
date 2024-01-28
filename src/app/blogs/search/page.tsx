@@ -43,10 +43,8 @@ const SearchPage = async ({
       </div>
       <Blogs
         currentUser={currentUser}
-        q={q}
-        isGrid
-        queryKey="search"
-        initialBlogs={blogs?.items}
+        className="max-w-[800px] mx-auto"
+        blogs={blogs}
       />
     </MaxWidthWrapper>
   );
