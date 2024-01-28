@@ -72,7 +72,7 @@ export const AsideBlogs = ({
         </Link>
       ))}
       {seeMoreUrl && (
-        <Link className={buttonVariants()} href={seeMoreUrl}>
+        <Link className={buttonVariants({ variant: "link" })} href={seeMoreUrl}>
           See more
         </Link>
       )}

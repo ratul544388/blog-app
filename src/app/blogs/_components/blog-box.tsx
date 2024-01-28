@@ -39,7 +39,7 @@ export const BlogBox = ({ blog, currentUser, queryKey }: BlogBoxProps) => {
               <p className="text-sm text-muted-foreground">
                 {dateFns.format(blog.createdAt, "dd-MM-yyyy")} -
               </p>
-              <p className="text-rose-500 text-sm">
+              <p className="text-primary text-sm">
                 {formatText(blog.category)}
               </p>
             </div>
@@ -54,7 +54,7 @@ export const BlogBox = ({ blog, currentUser, queryKey }: BlogBoxProps) => {
               {blog.isEditorChoice && (
                 <>
                   <Dot />
-                  <BadgeCheck className="h-4 w-4 text-blue-500" />
+                  <BadgeCheck className="h-4 w-4 text-primary" />
                 </>
               )}
             </div>
@@ -73,7 +73,7 @@ export const BlogBox = ({ blog, currentUser, queryKey }: BlogBoxProps) => {
             href={`/blogs/${blog.id}`}
             className={cn(
               buttonVariants({ variant: "link" }),
-              "underline decoration-rose-500 p-0"
+              "underline decoration-primary p-0"
             )}
           >
             Read More
@@ -88,7 +88,7 @@ export const BlogBox = ({ blog, currentUser, queryKey }: BlogBoxProps) => {
             {blog.isEditorChoice && (
               <>
                 <Dot />
-                <BadgeCheck className="h-4 w-4 text-blue-500" />
+                <BadgeCheck className="h-4 w-4 text-primary" />
               </>
             )}
           </div>

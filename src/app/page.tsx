@@ -25,11 +25,11 @@ export default async function Home({
   const totalPages = Math.ceil(totalBlogs / take);
   const blogs = await getBlogs({ category, take, page });
 
-  const popularBlogs = await getBlogs({ category, type: "POPULAR" });
-  const editorChoiceBlogs = await getBlogs({ category, type: "EDITOR_CHOICE" });
+  const popularBlogs = await getBlogs({ type: "POPULAR" });
+  const editorChoiceBlogs = await getBlogs({ type: "EDITOR_CHOICE" });
 
   return (
-    <MaxWidthWrapper className="space-y-8 pb-10">
+    <MaxWidthWrapper className="space-y-8 pt-5 pb-10">
       <h1 className="text-4xl font-bold">
         Quell Quest:{" "}
         <span className="opacity-80 font-normal">

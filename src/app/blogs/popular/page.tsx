@@ -22,8 +22,8 @@ export default async function Page({
   const totalPages = Math.ceil(totalBlogs / take);
   const blogs = await getBlogs({ category, take, page, type: "POPULAR" });
 
-  const recentPosts = await getBlogs({ category });
-  const editorChoiceBlogs = await getBlogs({ category, type: "EDITOR_CHOICE" });
+  const recentPosts = await getBlogs({});
+  const editorChoiceBlogs = await getBlogs({ type: "EDITOR_CHOICE" });
 
   return (
     <MaxWidthWrapper className="w-full space-y-6">

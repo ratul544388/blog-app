@@ -9,7 +9,13 @@ interface LogoProps {
 
 export const Logo = ({ className }: LogoProps) => {
   return (
-    <Link href="/" className={cn("text-lg font-bold", className)}>
+    <Link
+      href="/"
+      className={cn(
+        "text-lg font-bold bg-gradient-to-r to-green-500 from-emerald-600 bg-clip-text text-transparent",
+        className
+      )}
+    >
       QuillQuest
     </Link>
   );

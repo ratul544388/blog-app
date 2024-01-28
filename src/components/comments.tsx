@@ -12,6 +12,7 @@ import { LoadingError } from "./loading-error";
 import { buttonVariants } from "./ui/button";
 import { Fragment, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 
 interface CommentsProps {
   blog: Blog & {
@@ -29,7 +30,7 @@ export const Comments = ({ currentUser, blog }: CommentsProps) => {
   });
 
   if (status === "pending") {
-    return <Loader />;
+    return <Loader2 className="mx-auto animate-spin h-10 w-10 text-primary" />;
   }
 
   if (status === "error") {
@@ -68,7 +69,9 @@ export const Comments = ({ currentUser, blog }: CommentsProps) => {
           </Fragment>
         ))}
       </div>
-      {isFetchingNextPage && <Loader />}
+      {isFetchingNextPage && (
+        <Loader2 className="mx-auto animate-spin h-10 w-10 text-primary" />
+      )}
       <div ref={ref} />
     </div>
   );

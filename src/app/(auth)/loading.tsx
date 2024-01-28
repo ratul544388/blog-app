@@ -1,7 +1,8 @@
-import React from "react";
+import { Loader } from "@/components/loader";
+import { Loader2 } from "lucide-react";
 
 const Loading = () => {
-  return "Loading...";
+  return <Loader />;
 };
 
 export default Loading;

@@ -48,7 +48,7 @@ export const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
         onPageChange={handlePageClick}
         pageRangeDisplayed={3}
         pageCount={totalPages}
-        activeClassName="bg-primary px-3 py-1 dark:text-black text-white rounded-md"
+        activeClassName="bg-primary px-3 py-1 text-white rounded-md"
         pageClassName=""
         previousLabel="<"
         previousClassName={cn(

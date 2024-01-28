@@ -1,12 +1,16 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
+import ClipLoader from "react-spinners/ClipLoader";
 
 interface LoaderProps {
   className?: string;
 }
 
 export const Loader = ({ className }: LoaderProps) => {
-  return <Loader2 className={cn("h-8 w-8 mx-auto animate-spin", className)} />;
+  return (
+    <div className="fixed bg-background/20 transition-all inset-0 flex items-center justify-center">
+      <Loader2 className="h-10 w-10 text-primary animate-spin" />
+    </div>
+  );
 };

@@ -29,12 +29,12 @@ export const Categories = ({ category }: { category?: string }) => {
           }
           variant="outline"
           key={item}
-          className={cn("relative rounded-lg hover:bg-primary/10")}
+          className={cn("relative rounded-lg")}
         >
           <span
             className={cn(
               "capitalize z-20",
-              isActive(item) && "text-white dark:text-black transition-colors duration-500"
+              isActive(item) && "text-white"
             )}
           >
             {item.toLowerCase()}
